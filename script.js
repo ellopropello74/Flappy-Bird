@@ -77,19 +77,12 @@ Bird.prototype.isDead = function (height, pipes) {
     var pipeRight = pipe.x + pipe.width;
     var pipeBottom = pipe.y + pipe.height;
 
-    var overlapX = Math.max(
-      0,
-      Math.min(birdRight, pipeRight) - Math.max(this.x, pipe.x)
-    );
-    var overlapY = Math.max(
-      0,
-      Math.min(birdBottom, pipeBottom) - Math.max(this.y, pipe.y)
-    );
-
-    var overlapArea = overlapX * overlapY;
-    var pipeArea = pipe.width * pipe.height;
-
-    if (overlapArea / pipeArea > 0.05) {
+    if (
+      this.x < pipeRight &&
+      birdRight > pipe.x &&
+      this.y < pipeBottom &&
+      birdBottom > pipe.y
+    ) {
       return true;
     }
   }
@@ -206,9 +199,9 @@ Game.prototype.update = function () {
   var self = this;
 
   if (FPS == 0) {
-    setZeroTimeout(function () {
+    setTimeout(function () {
       self.update();
-    });
+    }, 0);
   } else {
     this.updateTimeout = setTimeout(function () {
       self.update();
@@ -236,7 +229,7 @@ Game.prototype.display = function () {
     this.ctx.drawImage(
       images.background,
       i * images.background.width -
-        Math.floor(this.backgroundx % images.background.width),
+        Math.round(this.backgroundx % images.background.width),
       0
     );
   }
