@@ -18,7 +18,7 @@ var loadImages = function (sources, callback) {
     imgs[i].src = sources[i];
     imgs[i].onload = function () {
       loaded++;
-      if (loaded == nb) {
+      if (loaded === nb) {
         callback(imgs);
       }
     };
@@ -35,7 +35,7 @@ var loadSounds = function (sources, callback) {
     sds[i].src = sources[i];
     sds[i].onloadeddata = function () {
       loaded++;
-      if (loaded == nb) {
+      if (loaded === nb) {
         callback(sds);
       }
     };
@@ -299,16 +299,17 @@ window.onload = function () {
       sounds = sds;
       game = new Game();
       game.start();
+
+      // Event listeners should be added after the game is initialized
+      document.addEventListener("keydown", function (event) {
+        if (event.code === "Space") {
+          game.bird.flap();
+        }
+      });
+
+      document.addEventListener("touchstart", function () {
+        game.bird.flap();
+      });
     });
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if (event.code === "Space") {
-      game.bird.flap();
-    }
-  });
-
-  document.addEventListener("touchstart", function () {
-    game.bird.flap();
   });
 };
