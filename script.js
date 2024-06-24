@@ -110,10 +110,7 @@ Pipe.prototype.update = function () {
 };
 
 Pipe.prototype.isOut = function () {
-  if (this.x + this.width < 0) {
-    return true;
-  }
-  return false;
+  return this.x + this.width < 0;
 };
 
 var Game = function () {
@@ -171,7 +168,7 @@ Game.prototype.update = function () {
     }
   }
 
-  if (this.interval == 0) {
+  if (this.interval === 0) {
     var deltaBord = 50;
     var pipeHoll = 120;
     var hollPosition =
@@ -188,7 +185,7 @@ Game.prototype.update = function () {
   }
 
   this.interval++;
-  if (this.interval == this.spawnInterval) {
+  if (this.interval === this.spawnInterval) {
     this.interval = 0;
   }
 
@@ -197,16 +194,9 @@ Game.prototype.update = function () {
   }
 
   var self = this;
-
-  if (FPS == 0) {
-    setTimeout(function () {
-      self.update();
-    }, 0);
-  } else {
-    this.updateTimeout = setTimeout(function () {
-      self.update();
-    }, 1000 / FPS);
-  }
+  this.updateTimeout = setTimeout(function () {
+    self.update();
+  }, 1000 / FPS);
 };
 
 Game.prototype.gameOver = function () {
@@ -235,7 +225,7 @@ Game.prototype.display = function () {
   }
 
   for (var i in this.pipes) {
-    if (i % 2 == 0) {
+    if (i % 2 === 0) {
       this.ctx.drawImage(
         images.pipetop,
         this.pipes[i].x,
