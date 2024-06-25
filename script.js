@@ -129,6 +129,11 @@ var Game = function () {
   this.restartButton = document.querySelector(".restart");
   this.updateTimeout = null;
   this.displayAnimationFrame = null;
+
+  var self = this;
+  this.restartButton.onclick = function () {
+    self.start();
+  };
 };
 
 Game.prototype.start = function () {
@@ -273,10 +278,6 @@ Game.prototype.display = function () {
     self.display();
   });
 };
-
-function restartGame() {
-  game.start();
-}
 
 window.onload = function () {
   var sprites = {
